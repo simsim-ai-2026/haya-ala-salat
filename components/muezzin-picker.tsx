@@ -33,12 +33,11 @@ export function MuezzinPicker({ selected, onSelect }: Props) {
     if (status.didJustFinish) setPreviewId(null);
   }, [status.didJustFinish]);
 
-  // Previewing is a decision aid, not playback the user expects to continue.
-  useEffect(() => {
-    return () => {
-      player.pause();
-    };
-  }, [player]);
+  // Previewing is a decision aid, not playback the user expects to continue —
+  // but there is nothing to do on unmount. `useAudioPlayer` wraps the player in
+  // `useReleasingSharedObject`, whose cleanup runs before any effect declared
+  // here, so the player is already released (and silent) by then. Pausing at
+  // that point throws "shared object was already released".
 
   const togglePreview = (option: MuezzinOption) => {
     if (!option.source) return;

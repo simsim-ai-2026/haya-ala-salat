@@ -58,6 +58,7 @@ lib/
   i18n.ts                 every user-facing string, for en / ar / fr
   muezzin.ts              recitation registry + licence attribution
   location.ts             geocoding and reverse geocoding helpers
+  notifications.ts        notification permission + the Android reminder channel
   storage.ts              JSON AsyncStorage helpers, namespaced under `has:`
 scripts/
   prep-brand-assets.js    regenerates every logo-derived image from logo.png
@@ -90,10 +91,18 @@ resolved behind the splash overlay, so the tabs never flash:
    my current location**. The pick is reverse-geocoded to a city name. The
    default coordinates (Casablanca) are only the map's starting point, never a
    schedule the user has agreed to.
-2. **Preferences** (`/setup-preferences`) — language, then the calculation
-   authority whose sun angles to use, then which muezzin to hear, with an inline
-   preview. The language is written on tap rather than on Continue, so the step
-   relabels itself as a preview of the choice.
+2. **Preferences** (`/setup-preferences`) — five steps in one screen: language,
+   the calculation authority whose sun angles to use, notification permission,
+   which muezzin to hear (with an inline preview), and 12- vs 24-hour clock. The
+   language is written on tap rather than on Continue, so the step relabels
+   itself as a preview of the choice.
+
+The notification step offers **Allow** only while the OS would actually show its
+dialog — `lib/notifications.ts` distinguishes *undetermined* from *refused*,
+because the system prompt appears once per install and a second press would
+resolve silently to the old answer. Refusal is a state the step explains, not an
+error it retries. Granting it sets `notificationsEnabled`; nothing schedules
+reminders off that flag yet.
 
 Everything there is reachable afterwards from the Settings tab.
 

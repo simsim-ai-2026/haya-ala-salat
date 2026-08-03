@@ -24,6 +24,12 @@ export type Settings = {
   /** Which adhan recitation to play. `none` keeps the app silent. */
   muezzin: MuezzinId;
   /**
+   * Whether the user wants prayer reminders. The OS permission is the real
+   * authority — this only records the intent, so the app knows not to re-prompt
+   * and Settings can reflect the choice. Nothing schedules notifications yet.
+   */
+  notificationsEnabled: boolean;
+  /**
    * Where prayer times are calculated for. Until `hasSetLocation` is true these
    * are only a starting point for the map picker, never a schedule the user has
    * agreed to — prayer times are wrong by minutes for every km of error.
@@ -42,6 +48,7 @@ export const DEFAULT_SETTINGS: Settings = {
   use24Hour: true,
   language: 'en',
   muezzin: 'none',
+  notificationsEnabled: false,
   coords: { latitude: 33.5731, longitude: -7.5898 },
   locationName: 'Casablanca, Morocco',
   hasSetLocation: false,

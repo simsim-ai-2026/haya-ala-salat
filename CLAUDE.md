@@ -195,14 +195,23 @@ build — so audio has to land in the same change as its registry entry.
 unmount — a preview is a decision aid, not playback the user expects to continue.
 
 Choosing a recitation does **not** yet make it play at prayer time. That needs
-`expo-notifications` with scheduled local notifications and a custom sound, which
-is a separate piece of work.
+scheduled local notifications with a custom sound, which is a separate piece of
+work. The permission half of it exists: the onboarding notification step calls
+`lib/notifications.ts`, which creates the Android `prayer-reminders` channel and
+stores consent in `Settings.notificationsEnabled`. Nothing reads that flag yet.
+
+`getNotificationPermission()` returns `undetermined` separately from `denied`
+(`granted` plus `canAskAgain`) because the OS dialog only appears once per
+install — UI that cannot tell them apart offers an "Allow" button that silently
+resolves to a months-old answer. Local notifications work in Expo Go on both
+platforms; only remote push is unavailable there since SDK 53.
 
 ### Location gate
 
 Onboarding is two gates in `app/(tabs)/_layout.tsx`, checked in order:
 `hasSetLocation` redirects to `/location-setup`, then `hasCompletedSetup`
-redirects to `/setup-preferences` (language, then calculation method). Both fire
+redirects to `/setup-preferences` (language, calculation method, notification
+permission, muezzin, clock format — one screen driven by `STEPS`). Both fire
 behind the splash overlay, so first-run users never see the tabs flash.
 `DEFAULT_SETTINGS.coords` (Casablanca) is only the map's starting point, never a
 schedule the user has agreed to.
