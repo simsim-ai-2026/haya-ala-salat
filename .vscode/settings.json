@@ -3,5 +3,13 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
-  }
+  },
+  // `@tailwind` / `@apply` are Tailwind directives, not standard CSS. Without this
+  // the built-in CSS language service flags every line of global.css.
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+  "tailwindCSS.experimental.classRegex": [
+    ["contentContainerClassName\\s*=\\s*[\"'`]([^\"'`]*)"]
+  ]
 }
