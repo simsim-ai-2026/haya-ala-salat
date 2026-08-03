@@ -21,6 +21,8 @@ export function isRTL(language: LanguageCode): boolean {
  */
 const EN = {
   'tab.prayerTimes': 'Prayer Times',
+  'tab.qibla': 'Qibla',
+  'tab.dhikr': 'Dhikr',
   'tab.settings': 'Settings',
 
   'common.loading': 'Loading…',
@@ -32,6 +34,46 @@ const EN = {
   'prayer.nextPrayer': 'Next prayer',
   'prayer.at': 'at',
   'prayer.calculatedWith': 'Calculated with adhan',
+
+  'qibla.title': 'Qibla',
+  'qibla.subtitle': 'Hold your device flat and turn until the marker reaches the top.',
+  'qibla.aligned': 'Facing the qibla',
+  'qibla.direction': 'Direction',
+  'qibla.fromNorth': 'from true north',
+  'qibla.heading': 'Your heading',
+  'qibla.reading': 'Reading the compass…',
+  'qibla.calibrate': 'Move your device in a figure eight to calibrate the compass.',
+  'qibla.magneticOnly': 'Using magnetic north. Allow location access for a true-north reading.',
+  'qibla.unavailable':
+    'This device has no compass, so the direction is shown relative to north rather than to the way you are facing.',
+
+  'compass.n': 'N',
+  'compass.e': 'E',
+  'compass.s': 'S',
+  'compass.w': 'W',
+
+  'dhikr.title': 'Dhikr',
+  'dhikr.subtitle': 'Remembrance for the parts of the day.',
+  'dhikr.morning': 'Morning dhikr',
+  'dhikr.morningHint': 'After Fajr, until sunrise',
+  'dhikr.evening': 'Evening dhikr',
+  'dhikr.eveningHint': 'After Asr, until sunset',
+  'dhikr.night': 'Before sleep',
+  'dhikr.nightHint': 'Said as you lie down',
+  'dhikr.afterPrayer': 'After prayer',
+  'dhikr.afterPrayerHint': 'After every obligatory prayer',
+  'dhikr.tasbih': 'Tasbih counter',
+  'dhikr.tasbihHint': 'Count your dhikr, or your own words',
+  'dhikr.tapToCount': 'Tap a dhikr to count each repetition.',
+  'dhikr.done': 'Done',
+
+  'tasbih.choosePhrase': 'What are you reciting?',
+  'tasbih.custom': 'Write your own',
+  'tasbih.customPlaceholder': 'Type what you want to repeat',
+  'tasbih.target': 'Count to',
+  'tasbih.tap': 'Tap anywhere below to count',
+  'tasbih.rounds': 'Rounds',
+  'tasbih.reset': 'Reset',
 
   'settings.title': 'Settings',
   'settings.display': 'Display',
@@ -123,6 +165,8 @@ type Dictionary = Record<StringKey, string>;
 
 const AR: Dictionary = {
   'tab.prayerTimes': 'مواقيت الصلاة',
+  'tab.qibla': 'القبلة',
+  'tab.dhikr': 'الأذكار',
   'tab.settings': 'الإعدادات',
 
   'common.loading': 'جارٍ التحميل…',
@@ -134,6 +178,45 @@ const AR: Dictionary = {
   'prayer.nextPrayer': 'الصلاة القادمة',
   'prayer.at': 'في',
   'prayer.calculatedWith': 'محسوبة بواسطة adhan',
+
+  'qibla.title': 'القبلة',
+  'qibla.subtitle': 'امسك جهازك أفقياً واستدر حتى تصل العلامة إلى الأعلى.',
+  'qibla.aligned': 'أنت في اتجاه القبلة',
+  'qibla.direction': 'الاتجاه',
+  'qibla.fromNorth': 'من الشمال الحقيقي',
+  'qibla.heading': 'اتجاهك',
+  'qibla.reading': 'جارٍ قراءة البوصلة…',
+  'qibla.calibrate': 'حرّك جهازك على شكل الرقم ٨ لمعايرة البوصلة.',
+  'qibla.magneticOnly': 'يُستخدم الشمال المغناطيسي. اسمح بالوصول إلى الموقع للحصول على الشمال الحقيقي.',
+  'qibla.unavailable': 'لا توجد بوصلة في هذا الجهاز، لذا يُعرض الاتجاه بالنسبة إلى الشمال لا إلى وجهتك.',
+
+  'compass.n': 'ش',
+  'compass.e': 'ق',
+  'compass.s': 'ج',
+  'compass.w': 'غ',
+
+  'dhikr.title': 'الأذكار',
+  'dhikr.subtitle': 'أذكار اليوم والليلة.',
+  'dhikr.morning': 'أذكار الصباح',
+  'dhikr.morningHint': 'بعد الفجر حتى شروق الشمس',
+  'dhikr.evening': 'أذكار المساء',
+  'dhikr.eveningHint': 'بعد العصر حتى غروب الشمس',
+  'dhikr.night': 'أذكار النوم',
+  'dhikr.nightHint': 'تُقال عند المضجع',
+  'dhikr.afterPrayer': 'أذكار بعد الصلاة',
+  'dhikr.afterPrayerHint': 'بعد كل صلاة مفروضة',
+  'dhikr.tasbih': 'المسبحة',
+  'dhikr.tasbihHint': 'عدّ أذكارك أو ما تختاره من الكلمات',
+  'dhikr.tapToCount': 'اضغط على الذكر لعدّ كل تكرار.',
+  'dhikr.done': 'تم',
+
+  'tasbih.choosePhrase': 'ماذا تذكر؟',
+  'tasbih.custom': 'اكتب ذكرك',
+  'tasbih.customPlaceholder': 'اكتب ما تريد تكراره',
+  'tasbih.target': 'العدد',
+  'tasbih.tap': 'اضغط في أي مكان بالأسفل للعدّ',
+  'tasbih.rounds': 'الجولات',
+  'tasbih.reset': 'تصفير',
 
   'settings.title': 'الإعدادات',
   'settings.display': 'العرض',
@@ -217,6 +300,8 @@ const AR: Dictionary = {
 
 const FR: Dictionary = {
   'tab.prayerTimes': 'Horaires',
+  'tab.qibla': 'Qibla',
+  'tab.dhikr': 'Dhikr',
   'tab.settings': 'Réglages',
 
   'common.loading': 'Chargement…',
@@ -228,6 +313,47 @@ const FR: Dictionary = {
   'prayer.nextPrayer': 'Prochaine prière',
   'prayer.at': 'à',
   'prayer.calculatedWith': 'Calculé avec adhan',
+
+  'qibla.title': 'Qibla',
+  'qibla.subtitle': "Tenez l'appareil à plat et tournez jusqu'à ce que le repère soit en haut.",
+  'qibla.aligned': 'Vous êtes face à la qibla',
+  'qibla.direction': 'Direction',
+  'qibla.fromNorth': 'depuis le nord géographique',
+  'qibla.heading': 'Votre orientation',
+  'qibla.reading': 'Lecture de la boussole…',
+  'qibla.calibrate': "Décrivez un huit avec votre appareil pour calibrer la boussole.",
+  'qibla.magneticOnly':
+    'Nord magnétique utilisé. Autorisez la localisation pour obtenir le nord géographique.',
+  'qibla.unavailable':
+    "Cet appareil n'a pas de boussole : la direction est indiquée par rapport au nord, pas à votre orientation.",
+
+  'compass.n': 'N',
+  'compass.e': 'E',
+  'compass.s': 'S',
+  'compass.w': 'O',
+
+  'dhikr.title': 'Dhikr',
+  'dhikr.subtitle': 'Les invocations du jour et de la nuit.',
+  'dhikr.morning': 'Dhikr du matin',
+  'dhikr.morningHint': 'Après le Fajr, jusqu’au lever du soleil',
+  'dhikr.evening': 'Dhikr du soir',
+  'dhikr.eveningHint': 'Après le Asr, jusqu’au coucher du soleil',
+  'dhikr.night': 'Avant de dormir',
+  'dhikr.nightHint': 'À dire au moment du coucher',
+  'dhikr.afterPrayer': 'Après la prière',
+  'dhikr.afterPrayerHint': 'Après chaque prière obligatoire',
+  'dhikr.tasbih': 'Compteur de tasbih',
+  'dhikr.tasbihHint': 'Comptez vos invocations, ou les vôtres',
+  'dhikr.tapToCount': 'Touchez une invocation pour compter chaque répétition.',
+  'dhikr.done': 'Terminé',
+
+  'tasbih.choosePhrase': 'Que récitez-vous ?',
+  'tasbih.custom': 'Écrivez la vôtre',
+  'tasbih.customPlaceholder': 'Saisissez ce que vous voulez répéter',
+  'tasbih.target': 'Compter jusqu’à',
+  'tasbih.tap': 'Touchez la zone ci-dessous pour compter',
+  'tasbih.rounds': 'Séries',
+  'tasbih.reset': 'Réinitialiser',
 
   'settings.title': 'Réglages',
   'settings.display': 'Affichage',

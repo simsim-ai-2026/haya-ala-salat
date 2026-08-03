@@ -41,7 +41,11 @@ app/
   setup-preferences.tsx   first-run: language, calculation method, muezzin
   (tabs)/_layout.tsx      bottom tabs + the two onboarding gates
   (tabs)/index.tsx        today's schedule and the live countdown
+  (tabs)/qibla.tsx        live compass pointing at the Kaaba
+  (tabs)/dhikr.tsx        the four adhkār collections and the tasbih counter
   (tabs)/settings.tsx     location, language, method, madhab, clock, adhan
+  dhikr/[category].tsx    one collection, with a per-dhikr repetition counter
+  dhikr/tasbih.tsx        tap counter for a chosen or hand-written phrase
 components/
   settings.tsx            settings context, backed by AsyncStorage
   branded-splash.tsx      second splash stage: lifts the logo, fades in the wordmark
@@ -53,9 +57,11 @@ components/
   ui/icon-symbol.tsx      SF Symbols on iOS, Material Icons elsewhere
 hooks/
   use-translation.ts      t(), language, locale, rtl
+  use-compass-heading.ts  device heading subscription for the qibla dial
 lib/
   prayer-times.ts         adhan wrapper: schedule, next prayer, qibla, formatting
   i18n.ts                 every user-facing string, for en / ar / fr
+  dhikr.ts                the adhkār themselves, plus the tasbih phrases
   muezzin.ts              recitation registry + licence attribution
   location.ts             geocoding and reverse geocoding helpers
   notifications.ts        notification permission + the Android reminder channel
@@ -111,6 +117,49 @@ configure. It is native-only: on web the map and search fall back to a coordinat
 readout plus browser geolocation. A store build additionally needs Google Maps
 keys in `app.json` (`ios.config.googleMapsApiKey`,
 `android.config.googleMaps.apiKey`); Expo Go supplies its own.
+
+## Qibla
+
+`app/(tabs)/qibla.tsx` draws a dial that counter-rotates against the device
+heading, so north stays north and the Kaaba marker walks around the rim as you
+turn. The bearing itself comes from `getQiblaDirection()` in
+`lib/prayer-times.ts`; the heading comes from `expo-location`'s
+`watchHeadingAsync` via `hooks/use-compass-heading.ts`, subscribed only while the
+screen is mounted.
+
+Three states the screen has to handle, all of them ordinary rather than errors:
+
+- **No compass** — `watchHeadingAsync` is native-only. On web the dial stays
+  north-up and still reads correctly as "the qibla is N° clockwise from north".
+- **Magnetic north only** — `trueHeading` is `-1` without foreground location
+  permission, which is normal for a user who picked their city on the map. The
+  screen falls back to `magHeading` and says so, since the two differ by the
+  local declination.
+- **Low accuracy** — `accuracy` below 2 prompts the figure-eight calibration
+  gesture.
+
+## Dhikr
+
+Four collections — morning, evening, before sleep, and after the obligatory
+prayers — plus a tasbih counter.
+
+The Arabic is never substituted, only accompanied: in English or French each
+dhikr shows the Arabic followed by the translation, and in Arabic it shows the
+Arabic alone, since translating it into its own language would print the same
+text twice. That rule lives in `resolveDhikr()`.
+
+The texts are in `lib/dhikr.ts` rather than `lib/i18n.ts` because the
+relationship between the languages is different: `i18n.ts` is a flat key → string
+map where all three say the same thing, while here Arabic is the content and the
+others gloss it. Long Qur'anic passages (Ayat al-Kursī, the closing sūrahs) are
+referenced rather than reproduced — a transcription slip in a verse is worse than
+an extra tap to open a muṣḥaf.
+
+Tapping a dhikr counts one repetition, and tapping a finished one starts it over.
+Those counts are per visit and deliberately not persisted. The tasbih counter is
+persisted, under its own `has:tasbih` key rather than in the settings context —
+it is screen state, not prayer configuration — and writes are debounced so a
+round of 100 taps is one write.
 
 ## Adhan audio
 

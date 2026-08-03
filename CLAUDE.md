@@ -67,6 +67,23 @@ require paths. Metro resolves the ESM build fine, but a plain
 `node -e "require('adhan')"` sanity check will fail — use
 `node --input-type=module` instead.
 
+### Qibla compass
+
+`app/(tabs)/qibla.tsx` composes two rotations rather than computing screen
+angles: the dial counter-rotates by `-heading` so north stays north, and the
+Kaaba marker is a child rotated by the qibla bearing, sitting at top-centre of a
+full-size container so rotating its parent walks it around the rim. Cardinal
+letters ride the dial and tilt with it, as on a physical compass — that is not a
+bug to fix.
+
+Heading comes from `hooks/use-compass-heading.ts` (`Location.watchHeadingAsync`),
+subscribed only while mounted; a magnetometer left running behind an unmounted
+screen costs battery for nothing. `trueHeading` is `-1` without foreground
+location permission — normal for someone who picked their city on the map — so
+the hook falls back to `magHeading` and flags `isMagneticOnly`, because the two
+differ by the local declination. `watchHeadingAsync` is native-only; on web the
+dial stays north-up.
+
 ### Styling
 
 NativeWind 4 only. There are no `StyleSheet` objects and no themed wrapper
@@ -148,6 +165,11 @@ without a measured reason.
 Android/web, with `icon-symbol.ios.tsx` using the native symbol. Any new icon
 name must be added to the `MAPPING` object or it renders blank off-iOS.
 
+Typed routes are generated into `.expo/types/router.d.ts` by the **dev server**,
+not by `npx expo export`. After adding a route, `tsc` will reject its `href`
+until `npx expo start` has run once — the export passes while the typecheck
+fails, which looks like a bug in the route and is not.
+
 ### i18n
 
 `lib/i18n.ts` holds every user-facing string for `en` / `ar` / `fr`. The `EN`
@@ -172,6 +194,30 @@ RTL is handled per-component (`rtl` from `useTranslation()` drives
 `flex-row-reverse` and `textAlign`), **not** through `I18nManager.forceRTL`, which
 needs a full app restart to take effect. Navigator chrome and the tab bar
 therefore stay LTR in Arabic.
+
+### Dhikr
+
+`lib/dhikr.ts` holds the adhkār and the tasbih phrases. It is *not* part of
+`lib/i18n.ts`, and merging it in would be a mistake: `i18n.ts` is a flat
+key → string map where the three languages are interchangeable, whereas here the
+Arabic is the content and `en`/`fr` gloss it. `resolveDhikr()` encodes the rule —
+Arabic always, translation only when the UI language is not `ar`.
+
+Long Qur'anic passages are referenced ("Recite Ayat al-Kursī"), never
+transcribed. Keep it that way; a silent typo in a verse is the worst failure this
+app could ship.
+
+Arabic dhikr text is always `textAlign: 'right'` with `writingDirection: 'rtl'`
+regardless of the UI language, and always with an explicit `lineHeight` — around
+1.9× — because harakat clip on Android at the default leading. This is the same
+constraint `brand-wordmark.tsx` works around.
+
+Tasbih state persists under its own `has:tasbih` storage key instead of going
+into the settings context, which is reserved for prayer configuration and display
+prefs. Writes are debounced 400ms, and the write effect is gated on the initial
+read having landed — otherwise the defaults overwrite the stored count in the
+moment before AsyncStorage answers. The per-dhikr repetition counters in
+`dhikr/[category].tsx` are intentionally *not* persisted.
 
 ### Adhan audio
 

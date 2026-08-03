@@ -37,6 +37,22 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="qibla"
+        options={{
+          title: t('tab.qibla'),
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="safari.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="dhikr"
+        options={{
+          title: t('tab.dhikr'),
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="hands.sparkles.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: t('tab.settings'),

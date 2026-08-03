@@ -18,6 +18,8 @@ const MAPPING = {
   'clock.fill': 'schedule',
   'gearshape.fill': 'settings',
   'location.fill': 'place',
+  'safari.fill': 'explore',
+  'hands.sparkles.fill': 'volunteer-activism',
   'checkmark': 'check',
   'chevron.right': 'chevron-right',
   'chevron.left': 'chevron-left',
