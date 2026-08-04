@@ -18,6 +18,12 @@ The registry lives in [`lib/muezzin.ts`](../../lib/muezzin.ts). Adding a
 recitation means shipping its audio in the same change — `require()` cannot
 point at a file that is absent, and Metro fails the build if it does.
 
+It also means regenerating the notification alert sounds:
+`node scripts/prep-notification-sounds.js`, then listing the new file in the
+`expo-notifications` plugin's `sounds` array in `app.json`. See
+[`../notification-sounds/README.md`](../notification-sounds/README.md) for why
+the OS alert cannot just be the MP3.
+
 Read the licensing note in [CREDITS.md](CREDITS.md) before adding anything: a
 recording of the adhan is a protected performance in its own right, whatever the
 age of the words.

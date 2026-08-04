@@ -135,6 +135,18 @@ const EN = {
   'setup.clock24': '24-hour',
   'setup.clock12': '12-hour',
 
+  'notification.title': 'Time for {prayer}',
+  'notification.body': 'It is {time} in {location}.',
+
+  'settings.notifications': 'Prayer reminders',
+  'settings.notificationsHint': 'A notification at the start of every prayer time.',
+  'settings.notificationsSound': 'The adhan you chose plays with it.',
+  'settings.notificationsSilent': 'Your device’s default alert sound will be used.',
+  'settings.notificationsDenied': 'Notifications are blocked for this app.',
+  'settings.notificationsUnsupported':
+    'Reminders need a development or store build — they cannot be scheduled here.',
+  'settings.openSystemSettings': 'Open device settings',
+
   'muezzin.title': 'Adhan',
   'muezzin.none': 'Silent',
   'muezzin.noneHint': 'No adhan sound',
@@ -273,6 +285,18 @@ const AR: Dictionary = {
   'setup.clockSubtitle': 'طريقة عرض المواقيت في جدولك.',
   'setup.clock24': 'نظام ٢٤ ساعة',
   'setup.clock12': 'نظام ١٢ ساعة',
+
+  'notification.title': 'حان وقت صلاة {prayer}',
+  'notification.body': 'الساعة {time} في {location}.',
+
+  'settings.notifications': 'تنبيهات الصلاة',
+  'settings.notificationsHint': 'إشعار عند دخول وقت كل صلاة.',
+  'settings.notificationsSound': 'يُرفع معه الأذان الذي اخترته.',
+  'settings.notificationsSilent': 'سيُستخدم صوت التنبيه الافتراضي في جهازك.',
+  'settings.notificationsDenied': 'الإشعارات محظورة لهذا التطبيق.',
+  'settings.notificationsUnsupported':
+    'تحتاج التنبيهات إلى نسخة تطوير أو نسخة من المتجر — لا يمكن جدولتها هنا.',
+  'settings.openSystemSettings': 'فتح إعدادات الجهاز',
 
   'muezzin.title': 'الأذان',
   'muezzin.none': 'صامت',
@@ -417,6 +441,18 @@ const FR: Dictionary = {
   'setup.clockSubtitle': "Comment les horaires s'affichent dans votre planning.",
   'setup.clock24': 'Format 24 heures',
   'setup.clock12': 'Format 12 heures',
+
+  'notification.title': 'C’est l’heure du {prayer}',
+  'notification.body': 'Il est {time} à {location}.',
+
+  'settings.notifications': 'Rappels de prière',
+  'settings.notificationsHint': 'Une notification au début de chaque prière.',
+  'settings.notificationsSound': 'L’adhan que vous avez choisi est joué avec.',
+  'settings.notificationsSilent': 'Le son d’alerte par défaut de votre appareil sera utilisé.',
+  'settings.notificationsDenied': 'Les notifications sont bloquées pour cette application.',
+  'settings.notificationsUnsupported':
+    'Les rappels nécessitent une version de développement ou du store — impossible de les programmer ici.',
+  'settings.openSystemSettings': 'Ouvrir les réglages',
 
   'muezzin.title': 'Adhan',
   'muezzin.none': 'Silencieux',

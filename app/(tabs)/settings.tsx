@@ -4,6 +4,7 @@ import { Linking, Pressable, ScrollView, Switch, Text, View } from "react-native
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { MuezzinPicker } from "@/components/muezzin-picker";
+import { PrayerReminderToggle } from "@/components/prayer-reminder-toggle";
 import { useSettings } from "@/components/settings";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { useTranslation } from "@/hooks/use-translation";
@@ -66,6 +67,10 @@ export default function SettingsScreen() {
               onPress={() => updateSettings({ language: language.code })}
             />
           ))}
+        </Section>
+
+        <Section title={t("settings.notifications")} rtl={rtl} bare>
+          <PrayerReminderToggle />
         </Section>
 
         <Section title={t("muezzin.title")} rtl={rtl} bare>

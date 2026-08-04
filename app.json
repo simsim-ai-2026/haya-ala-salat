@@ -45,7 +45,18 @@
           "locationAlwaysAndWhenInUsePermission": "Allow Haya ala Salat to use your location to calculate accurate prayer times and the qibla direction."
         }
       ],
-      "expo-audio"
+      "expo-audio",
+      [
+        "expo-notifications",
+        {
+          "sounds": [
+            "./assets/notification-sounds/adhan_casablanca.wav",
+            "./assets/notification-sounds/adhan_doha.wav",
+            "./assets/notification-sounds/adhan_kalkan.wav",
+            "./assets/notification-sounds/adhan_aaqib.wav"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

@@ -23,6 +23,17 @@ export type MuezzinOption = {
    * their audio alongside the code change.
    */
   source: AudioSource | null;
+  /**
+   * File name of the copy bundled as an *OS notification sound*, or `null` to
+   * use the device's default alert. This is not `source`: iOS ignores any
+   * notification sound longer than 30 seconds and cannot play MP3 at all, so
+   * `scripts/prep-notification-sounds.js` writes a trimmed PCM version into
+   * `assets/notification-sounds/`, which `app.json` bundles.
+   *
+   * The name doubles as an Android resource name, so it is lowercase with
+   * underscores — the expo-notifications plugin rejects anything else.
+   */
+  notificationSound: string | null;
   /** Required by the licence. Surfaced in Settings and in assets/audio/CREDITS.md. */
   attribution?: MuezzinAttribution;
 };
@@ -50,12 +61,14 @@ export const MUEZZIN_OPTIONS: MuezzinOption[] = [
     labelKey: 'muezzin.none',
     hintKey: 'muezzin.noneHint',
     source: null,
+    notificationSound: null,
   },
   {
     id: 'casablanca',
     labelKey: 'muezzin.casablanca',
     hintKey: 'muezzin.casablancaHint',
     source: require('../assets/audio/casablanca-hassan-ii.mp3'),
+    notificationSound: 'adhan_casablanca.wav',
     attribution: {
       work: 'Llamada a oración Mezquita Hassan II',
       author: 'Fraguando',
@@ -69,6 +82,7 @@ export const MUEZZIN_OPTIONS: MuezzinOption[] = [
     labelKey: 'muezzin.dohaStandard',
     hintKey: 'muezzin.dohaStandardHint',
     source: require('../assets/audio/doha-standard.mp3'),
+    notificationSound: 'adhan_doha.wav',
     attribution: {
       work: 'Adhan Recordings from Doha, Qatar — Dhuhr',
       author: 'Uploaded by abd.al.rahman (field recording, 2013–2014)',
@@ -81,6 +95,7 @@ export const MUEZZIN_OPTIONS: MuezzinOption[] = [
     labelKey: 'muezzin.kalkan',
     hintKey: 'muezzin.kalkanHint',
     source: require('../assets/audio/kalkan-turkey.mp3'),
+    notificationSound: 'adhan_kalkan.wav',
     attribution: {
       work: 'Marina Kalkan, Turkey — 915a Muezzin call to prayer (evening)',
       author: 'Piotrek Zyla, radio aporee',
@@ -93,6 +108,7 @@ export const MUEZZIN_OPTIONS: MuezzinOption[] = [
     labelKey: 'muezzin.aaqibAzeez',
     hintKey: 'muezzin.aaqibAzeezHint',
     source: require('../assets/audio/aaqib-azeez.mp3'),
+    notificationSound: 'adhan_aaqib.wav',
     attribution: {
       work: 'The Adhan – Muslim Call to Prayer – Aaqib Azeez',
       author: 'Atcovi',

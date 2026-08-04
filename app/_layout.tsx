@@ -14,6 +14,7 @@ import "react-native-reanimated";
 import { BrandedSplash } from "@/components/branded-splash";
 import { SettingsProvider, useSettings } from "@/components/settings";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { usePrayerNotifications } from "@/hooks/use-prayer-notifications";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -36,6 +37,10 @@ function RootNavigator() {
   const colorScheme = useColorScheme();
   const { isLoading } = useSettings();
   const [isSplashDone, setIsSplashDone] = useState(false);
+
+  // Reminders are scheduled from here rather than from a screen: the schedule
+  // has to be kept current whichever tab the user happens to open.
+  usePrayerNotifications();
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

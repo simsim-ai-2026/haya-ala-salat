@@ -240,17 +240,58 @@ build — so audio has to land in the same change as its registry entry.
 `playsInSilentMode` so the preview is audible with the ringer off, and pauses on
 unmount — a preview is a decision aid, not playback the user expects to continue.
 
-Choosing a recitation does **not** yet make it play at prayer time. That needs
-scheduled local notifications with a custom sound, which is a separate piece of
-work. The permission half of it exists: the onboarding notification step calls
-`lib/notifications.ts`, which creates the Android `prayer-reminders` channel and
-stores consent in `Settings.notificationsEnabled`. Nothing reads that flag yet.
-
 `getNotificationPermission()` returns `undetermined` separately from `denied`
 (`granted` plus `canAskAgain`) because the OS dialog only appears once per
 install — UI that cannot tell them apart offers an "Allow" button that silently
 resolves to a months-old answer. Local notifications work in Expo Go on both
 platforms; only remote push is unavailable there since SDK 53.
+
+### Prayer reminders
+
+There is no background task computing prayer times. `lib/prayer-notifications.ts`
+hands the OS a **local notification per prayer for the next seven days**, which is
+what makes them fire with the app closed. `hooks/use-prayer-notifications.ts`,
+mounted once in `app/_layout.tsx`, re-syncs whenever the inputs change and on
+every return to the foreground — that second trigger is what walks the seven-day
+window forward, so removing it silently stops reminders a week later.
+
+- Seven days × five prayers is 35. iOS keeps only the **64 soonest** pending
+  notifications and drops the rest without a word, so `DAYS_AHEAD` cannot grow far.
+- A sync cancels everything and rebuilds. It is skipped when the settings *and the
+  calendar day* are unchanged, so foregrounding the app repeatedly is cheap.
+- Scheduling waits for `hasSetLocation`; the Casablanca default would otherwise
+  put the wrong times on someone's lock screen for the moment before storage answers.
+- `Settings.notificationsEnabled` is intent only. Every sync re-reads the OS
+  permission, because it can be revoked from system settings without the app hearing.
+
+The sound is the awkward part. **iOS ignores any notification sound longer than 30
+seconds** — falling back to the default chime, with no error — and will not play
+MP3 at all. So the shipped recitations cannot be the alert sound:
+`node scripts/prep-notification-sounds.js` writes 28-second mono PCM copies to
+`assets/notification-sounds/`, listed in the `expo-notifications` plugin's `sounds`
+array in `app.json`. Adding a recitation means regenerating those and adding it to
+the array; the file names double as Android resource names, so they are lowercase
+with underscores or prebuild fails.
+
+An Android channel's sound is fixed when the channel is created, so there is one
+channel *per recitation* (`prayer-reminders-<id>`), and `ensurePrayerChannel()`
+deletes the others — Android lists every channel an app ever created in its
+settings screen. `prayer-reminders` itself is the default-alert channel, used when
+the muezzin is `none`.
+
+With the app in the foreground the OS alert sound is suppressed and the **full**
+recitation plays through expo-audio instead, since a 28-second alert on top of the
+player would be two adhans at once. `none` keeps the OS sound: that user asked for
+no adhan, not for silence.
+
+Reminders themselves are testable in Expo Go on **both** platforms: what SDK 53
+removed there is Android *push*, and importing `expo-notifications` in Expo Go only
+warns. The sound is the part that does not survive — the config plugin never runs
+in Expo Go, so the WAVs are not in the bundle and the alert falls back to the
+default chime. `CUSTOM_SOUNDS_SUPPORTED` says so in the UI rather than letting it
+look broken. Hearing the adhan from a locked screen needs `npx expo run:ios` /
+`run:android` or an EAS build; in Expo Go the in-app player still plays it in full
+when a reminder lands with the app open.
 
 ### Location gate
 
